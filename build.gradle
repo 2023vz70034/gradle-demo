@@ -1,0 +1,32 @@
+plugins {
+    id 'java'
+    id 'jacoco' // Required for Task 1, Step B [cite: 50-51]
+}
+
+group = 'com.bits.mvn'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JUnit 5 for testing AppTest.java [cite: 27]
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    // Log4j for the logging requirements in App.java [cite: 12-13]
+    implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
+    implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport // Ensures report is generated right after tests [cite: 52]
+}
+
+jacocoTestReport {
+    dependsOn test 
+    reports {
+        xml.required = true // Crucial for SonarQube integration [cite: 86]
+        html.required = true // Required for Task 1 Deliverables [cite: 63]
+    }
+}
